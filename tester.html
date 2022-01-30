@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+          <div class="intro">
+            <h1>The<span class="logo">Anime</span>Library</h1>
+            <p>start your <span class="next">next</span> binge watch.</p>
+          </div>
+    
+          <form action="#">
+            <div class="search-bar">
+              <input type="text" placeholder="Enen No Shouboutai" id="search-input">
+              <input type="submit" value="Search">
+            </div>
+          </form>
+        </header>
+    
+        <section class="results">
+          <!-- results of user search -->
+        </section>
+      </div>
+    <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+    <script>
+    // $(function(){
+    //     $.ajax({
+    //      url: "https://api.jikan.moe/v3/search/anime",
+    //      method: "GET",
+    //      dataType:"json"
+    //  })
+    //  .then(function(data){
+    //      console.log(data);
+    //  })
+
+    // });
+
+    const app = {};
+
+
+    
+app.getImages = function(searchQuery){
+    $.ajax( {
+        url: 'https://cdn.animenewsnetwork.com/encyclopedia/api.xml?anime=id',
+        method: 'GET',
+        dataType: 'JSONp',
+        data: {
+            q: searchQuery
+        }
+    }).then(function(result){
+        console.log(result)
+        //where do our gifs live --> result.data [{}, {}, {}]
+
+        //remove any gifs that may already be displayed
+        $('.results').empty(); 
+
+        // display our gifs
+        app.displayImages(result.data);
+    })
+}
+//how to display our API gifs on the page
+app.displayImages = function(arrayOfData){
+    arrayOfData.forEach(function(animeObject){
+        console.log(animeObject);
+        //pathway to a gif image is
+        //gifObject.images.original_still.url
+
+        // construct some <img> HTML with the API data
+        const animeHTML = `
+            <div class="thumbnail">
+                <div class="poster-img">
+                    <img src="${anime.image_url}">
+                </div>
+                <div class="poster-info">
+                    <span class="anime-title">${anime.title}</span>
+                    <p>${anime.synopsis}</p>
+                </div>
+                <div class="more-details">
+                    <a href="${anime.url}">Click for more details</a>
+                </div>
+            </div>
+        `
+
+        $('.results').append(animeHTML);
+    })
+
+
+
+}
+
+app.init = function(){
+    $('form').on('submit', function(event){
+        event.preventDefault();
+        // capture the value inside of the input field 
+        const userSearch  = $('input').val();
+        // pass that value to our displayImages method
+        app.getImages(userSearch);
+    })
+    
+}
+
+$(document).ready(function(){
+    app.init();
+})
+    </script>
+</body>
+</html>

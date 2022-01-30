@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Creepster&family=Gothic+A1&display=swap" rel="stylesheet"> 
+    <title>Document</title>
+    <style>
+        body{
+            font-family:'Gothic A1', sans-serif;
+        }
+        .wrapper {
+            max-width: 1200px;
+            width: 85%;
+            margin: 0 auto;
+        }
+        #logo {
+            width: 40%;
+            display: block;
+            margin: auto;
+        }
+        button {
+            width: 140px;
+            height: 45px;
+            font-size: 20px;
+            display: block;
+            margin: 40px auto;
+            background-color: #fff;
+            border:none;
+            border-radius: 45px;
+            box-shadow: 0px 8px 15px;
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+            outline: none;
+        }
+        button:hover {
+            background-color: #B9C297;
+            box-shadow: 0px 15px 20px rgba(185, 194, 151, 0.4);
+            color: #fff;
+            transform: translateY(-7px);
+        }
+        #movie_img {
+            border: 3px solid #949619;
+            width:25%;
+            height:auto;
+            position: relative;
+            left: 300px;
+        }
+        .movie_info {
+            display: inline-flex;
+            width: 100%;
+        }
+        .movie_titles {
+            font-size: 30px;
+            text-align:center;
+            background-color:#f6eae5 ;
+            border-radius: 45px;
+            width: 700px;
+            margin: auto;
+        }
+        .description {
+            background-color: #d0cdc9;
+            width: 30%;
+            height:auto;
+            position: relative;
+            left: 200px;
+            
+        }
+
+        .soot {
+            position: absolute;
+            right: 0px;
+            bottom: -100px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+
+        <header>
+            <img id="logo" src="./1200px-Studio_Ghibli_logo.svg.png" alt="Studio Ghibli Logo">
+        </header>
+        <main>
+            <button>Surprise Me</button>
+            <section class="results">
+                <!-- Results to be added here -->
+            </section>
+            <img class='soot' src="./giphy (1).gif" alt="Soot Spirit Gif.">
+        </main>
+
+    </div>
+    <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+    <script>
+        const app = {}; 
+        
+        app.randomMovie = function(arrayOfMovies){
+            const randomIndex = Math.floor(Math.random()*arrayOfMovies.length)
+            
+            return arrayOfMovies[randomIndex];
+        }
+        
+        
+            
+            // CALL ON API
+            app.getMovieInfo = function(){
+                $.ajax({
+                    url: 'https://ghibliapi.herokuapp.com/films',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                        q: ""
+                    }
+                }).then(function(result){
+                    // see Array
+                    // console.log(result);
+                // where do movies live --->result [{}, {}, {}]
+               
+                // remove any movies that may already be displayed
+                $('.results').empty();
+
+                //display these movies
+                app.displayMovieInfo(result);
+                app.randomMovie(result);
+                })
+            }
+            
+            //how to display our API info on the page
+            app.displayMovieInfo = function(arrayOfData){
+              //  arrayOfData.forEach( function(movieObject){
+                    // console.log(movieObject);
+                    //pathway to description is 
+                    //movieObject.description
+                   
+                    //pathway to movie image is 
+                    //movieObject.image
+
+                    //construct some HTML with API data
+                   const randomMovie = app.randomMovie(arrayOfData);
+                   console.log(randomMovie);
+
+                    const movieHTML = `
+                        <div class="movie_titles"
+                            <h2 class='english_movie_title'>${randomMovie.title}</h2>
+                            <h2 class='original_title'>${randomMovie.original_title}</h2>
+                        </div>
+                        <div class="movie_info">
+                            <p class='description'>${randomMovie.description}</p>
+                            <img id='movie_img' src="${randomMovie.image}" alt="">  
+                        </div>
+                        `
+                    // add the HTML to the page
+                    $('.results').append(movieHTML);
+             //   } )
+            }
+
+            app.init = function () {
+                
+                $('button').on('click', function(event){
+                    event.preventDefault();
+                    app.getMovieInfo();
+                    
+                })
+            }
+
+            $(document).ready(function(){
+                app.init();
+            })
+
+           
+              
+    </script>
+</body>
+</html>
