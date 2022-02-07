@@ -5,8 +5,8 @@ $('.opening a').click(function(){
     $('.opening_container').css('display', 'none');
     console.log('click');
 })
-$('.opening').hover(function(){
-    $('.opening_container').css('transform', 'scale(9)');
+$('.opening a').hover(function(){
+    $('.opening_container').css('transform', 'scale(13)');
 })
 
 const app = {}; 

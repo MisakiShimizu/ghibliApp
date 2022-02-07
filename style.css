@@ -12,54 +12,43 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
     width: 85%;
     margin: 0 auto;
 }
-body{
+body {
+    font-size: 125%;
+}
+.opening {
     background-image: url(./Media/Red_Gate_1.png);
+    width: 100vw;
     height:100vh;
     background-repeat: no-repeat;
     background-size: cover;
+    z-index: 1;
 }
 .opening p{
     color: white;
-  
     border:none;
-    font-size: 30px;
+    font-size: 3rem;
     width: 90px;
     word-wrap: normal;
     position: relative;
+    left: 890px;
+    top:420px;
+    z-index: 2;
 }
 .opening a {
     color: white;
     text-decoration: none;
 }
-.opening a:active{
-    color:black;
-}
-.opening:hover{
-    margin-bottom: 160px;
-    transform: scale(6);
-}
-
 .opening_container{
-    width:100%;
-    height:100%;
+    width: 100vw;
+    height: 100vh;
     background: none;
     display:flex;
     align-items: center;
     justify-content: center;
+    z-index: 0;
+    transition: all 1s;
+    transform-origin: 950px 520px;
 }
-.opening {
-    background-color: black;
-    position:relative;
-    height:150px;
-    width:7rem;
-    transition:all 1s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin:90px 20px 0 0;
-    border-radius: 45px;
-}
-
 .ghibli_main {
     display:none;
 }
