@@ -5,9 +5,18 @@ $('.opening a').click(function(){
     $('.opening_container').css('display', 'none');
     console.log('click');
 })
-$('.opening a').hover(function(){
-    $('.opening_container').css('transform', 'scale(13)');
+$(window).on('load resize', function() {
+    if($(this).width() >= 810) {
+        $('.opening a').hover(function(){
+            $('.opening_container').css('transform', 'scale(13)');
+        })
+    }else {
+        $('.opening a').hover(function(){
+            $('.opening_container').css('transform', 'none');
+        })
+    }
 })
+
 
 const app = {}; 
         
@@ -60,7 +69,7 @@ const app = {};
                         </div>
                         <div class="movie_info">
                             <p class='description'>${randomMovie.description}</p>
-                            <img id='movie_img' src="${randomMovie.image}" alt="">  
+                            <img class='movie_img' src="${randomMovie.image}" alt="">  
                         </div>
                         `
                     // add the HTML to the page
