@@ -3,7 +3,7 @@ $('.opening a').click(function(){
     $('body').css("background-image", 'none');
     $('.opening p').css('display', 'none');
     $('.opening_container').css('display', 'none');
-    console.log('click');
+    
 })
 $(window).on('load resize', function() {
     if($(this).width() >= 810) {
@@ -60,7 +60,7 @@ const app = {};
 
                     //construct some HTML with API data
                    const randomMovie = app.randomMovie(arrayOfData);
-                   console.log(randomMovie);
+                   
 
                     const movieHTML = `
                         <div class="movie_titles"
